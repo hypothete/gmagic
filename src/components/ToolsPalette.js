@@ -18,16 +18,20 @@ const ToolButton = styled.button`
 `;
 
 class ToolsPalette extends Component {
+
   render() {
-    const {setDrawingMode, addCommand, drawingMode} = this.props;
+    const {setDrawingMode, drawingMode} = this.props;
     return (
       <ToolsWrap>
-        <button onClick={() => { addCommand({})}}>Add</button>
-        <ToolButton onClick={() => { setDrawingMode('DRAW') }} active={drawingMode === 'DRAW'}>
-          <span role="img" aria-label="add shape">✒️ Add</span>
+        <ToolButton
+          onClick={() => {setDrawingMode('DRAW_LINE')}}
+          active={drawingMode === 'DRAW_LINE'}>
+          <span role="img" aria-label="add shape">✒️ Draw Line</span>
         </ToolButton>
-        <ToolButton onClick={() => { setDrawingMode('EDIT') }} active={drawingMode === 'EDIT'}>
-          <span role="img" aria-label="edit shape">📍 Edit</span>
+        <ToolButton
+          onClick={() => {setDrawingMode('DRAW_POLYGON')}}
+          active={drawingMode === 'DRAW_POLYGON'}>
+          <span role="img" aria-label="add shape">⭐ Draw Polygon</span>
         </ToolButton>
       </ToolsWrap>
     );
@@ -40,4 +44,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, {addCommand, setDrawingMode})(ToolsPalette);
+export default connect(mapStateToProps, {setDrawingMode})(ToolsPalette);
