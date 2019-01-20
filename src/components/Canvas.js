@@ -32,11 +32,35 @@ class Canvas extends Component {
   }
 
   renderCanvas(props) {
-    this.ctx.fillStyle = 'blue';
-    this.ctx.fillRect(0, 0, 128, 128);
+    this.ctx.clearRect(0, 0, 128, 128);
 
-    this.ctx.fillStyle = 'red';
-    this.ctx.fillRect(32, 32, 64, 64);
+    const {commands, activeCommand} = props;
+
+    const cmds = [...commands].reverse();
+
+    cmds.forEach(cmd => {
+      switch(cmd.type) {
+        case 'POLYGON': {
+          this.ctx.fillStyle = cmd.color;
+          this.ctx.beginPath();
+          for (let i=0; i< cmd.points.length; i+=2) {
+            const x = cmd.points[i];
+            const y = cmd.points[i+1];
+            if (i === 0) {
+              this.ctx.moveTo(x,y);
+            }
+            else {
+              this.ctx.lineTo(x,y);
+            }
+          }
+          this.ctx.closePath();
+          this.ctx.fill();
+          break;
+        }
+        default:
+          return;
+      }
+    });
   }
 
   render() {
