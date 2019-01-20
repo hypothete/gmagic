@@ -7,7 +7,7 @@ import CommandListItem from './CommandListItem';
 const StyledList = styled.div`
   border: 2px inset;
   min-width: 200px;
-  max-height: 100vw;
+  max-height: 512px;
   overflow-y: scroll;
 `;
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import colors from '../utils/colors';
+
 const PixelCanvas = styled.canvas`
   width: 512px;
   height: 512px;
@@ -41,7 +43,7 @@ class Canvas extends Component {
     cmds.forEach(cmd => {
       switch(cmd.type) {
         case 'POLYGON': {
-          this.ctx.fillStyle = cmd.color;
+          this.ctx.fillStyle = colors[cmd.colorId];
           this.ctx.beginPath();
           for (let i=0; i< cmd.points.length; i+=2) {
             const x = cmd.points[i];

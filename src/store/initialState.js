@@ -6,7 +6,7 @@ export default {
       points: [
         64, 32, 96, 96, 32, 96
       ],
-      color: 'blue'
+      colorId: 1
     },
     {
       id: 12346,
@@ -14,7 +14,7 @@ export default {
       points: [
         32, 32, 96, 32, 64, 96
       ],
-      color: 'red'
+      colorId: 8
     }
   ],
   activeCommand: null,

@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import {addCommand} from '../actions/commands';
-
 import Canvas from './Canvas';
 import CommandList from './CommandList';
+import ToolsPalette from './ToolsPalette';
 
 const Row = styled.div`
   width: 100%;
@@ -13,22 +12,29 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin: 10px 0;
+`;
+
+const Wrap = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 class App extends Component {
   render() {
-    const {addCommand} = this.props;
     return (
-      <Fragment>
+      <Wrap>
         <Row>
           <Canvas></Canvas>
           <CommandList></CommandList>
         </Row>
-        <Row>
-          <button onClick={() => { addCommand({})}}>Add</button>
-        </Row>
-      </Fragment>
+        <ToolsPalette></ToolsPalette>
+      </Wrap>
     );
   }
 }
@@ -37,4 +43,4 @@ const mapStateToProps = state => {
   return {};
 }
 
-export default connect(mapStateToProps, {addCommand})(App);
+export default connect(mapStateToProps)(App);
