@@ -32,3 +32,17 @@ export function moveCommandDown(command) {
     payload: command
   }
 }
+
+export function movePoint(id, index, x, y) {
+  return {
+    type: types.MOVE_POINT,
+    payload: { id, index, x, y }
+  };
+}
+
+export function addPoint(id, x, y) {
+  return {
+    type: types.ADD_POINT,
+    payload: { id, x, y }
+  };
+}

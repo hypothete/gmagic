@@ -44,6 +44,44 @@ export default function commandsReducer(state = initialState.commands, action) {
         ...state.slice(foundCmdIndex+2)
       ];
     }
+
+    case types.MOVE_POINT: {
+      const {id, index, x, y} = action.payload;
+      return state.map(cmd => {
+        if (cmd.id === id) {
+          return {
+            ...cmd,
+            points: cmd.points.map((pt, idx) => {
+              if (idx === index) {
+                return x;
+              }
+              else if(idx === index+1) {
+                return y;
+              }
+              return pt;
+            })
+          }
+        }
+        return cmd;
+      })
+    }
+
+    case types.ADD_POINT: {
+      const {id, x, y} = action.payload;
+      return state.map(cmd => {
+        if (cmd.id === id) {
+          return {
+            ...cmd,
+            points: [
+              ...cmd.points,
+              x,
+              y
+            ]
+          }
+        }
+        return cmd;
+      });
+    }
     
     default:
       return state;
