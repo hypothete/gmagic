@@ -18,3 +18,17 @@ export function removeCommand(command) {
     payload: command
   }
 }
+
+export function moveCommandUp(command) {
+  return {
+    type: types.MOVE_COMMAND_UP,
+    payload: command
+  }
+}
+
+export function moveCommandDown(command) {
+  return {
+    type: types.MOVE_COMMAND_DOWN,
+    payload: command
+  }
+}

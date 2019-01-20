@@ -1,4 +1,5 @@
 export default {
   commands: [],
-  activeCommand: null
+  activeCommand: null,
+  drawingMode: 'DRAW'
 }
