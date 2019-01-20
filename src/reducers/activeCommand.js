@@ -11,6 +11,10 @@ export default function activeCommandReducer(state = initialState.activeCommand,
     case types.ADD_COMMAND:
       return action.payload.id;
 
+    // when drawing mode is set, clear active command
+    case types.SET_DRAWING_MODE:
+      return null;
+
     default:
       return state;
   }

@@ -46,8 +46,8 @@ class Canvas extends Component {
           this.ctx.fillStyle = colors[cmd.colorId];
           this.ctx.beginPath();
           for (let i=0; i< cmd.points.length; i+=2) {
-            const x = cmd.points[i];
-            const y = cmd.points[i+1];
+            const x = cmd.points[i] - 0.5;
+            const y = cmd.points[i+1] - 0.5;
             if (i === 0) {
               this.ctx.moveTo(x,y);
             }
@@ -59,8 +59,33 @@ class Canvas extends Component {
           this.ctx.fill();
           break;
         }
+        case 'LINE': {
+          this.ctx.strokeStyle = colors[cmd.colorId];
+          this.ctx.beginPath();
+          for (let i=0; i< cmd.points.length; i+=2) {
+            const x = cmd.points[i] - 0.5;
+            const y = cmd.points[i+1] - 0.5;
+            if (i === 0) {
+              this.ctx.moveTo(x,y);
+            }
+            else {
+              this.ctx.lineTo(x,y);
+            }
+          }
+          this.ctx.stroke();
+          break;
+        }
         default:
           return;
+      }
+      if(cmd.id === activeCommand) {
+        // draw points
+        this.ctx.strokeStyle = colors[cmd.colorId];
+        for (let i=0; i< cmd.points.length; i+=2) {
+          const x = cmd.points[i] - 0.5;
+          const y = cmd.points[i+1] - 0.5;
+          this.ctx.strokeRect(x-2, y-2, 4, 4);
+        }
       }
     });
   }
@@ -74,7 +99,8 @@ class Canvas extends Component {
 
 const mapStateToProps = state => {
   return {
-    commands: state.commands
+    commands: state.commands,
+    activeCommand: state.activeCommand
   };
 }
 

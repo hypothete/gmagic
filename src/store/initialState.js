@@ -10,7 +10,7 @@ export default {
     },
     {
       id: 12346,
-      type: 'POLYGON',
+      type: 'LINE',
       points: [
         32, 32, 96, 32, 64, 96
       ],

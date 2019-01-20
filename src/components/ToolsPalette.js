@@ -11,12 +11,24 @@ const ToolsWrap = styled.div`
   flex: 1;
 `;
 
+const ToolButton = styled.button`
+  margin: 10px;
+  border-width: 2px;
+  border-color: ${props => props.active ? 'blue' : 'none'};
+`;
+
 class ToolsPalette extends Component {
   render() {
-    const {setDrawingMode, addCommand} = this.props;
+    const {setDrawingMode, addCommand, drawingMode} = this.props;
     return (
       <ToolsWrap>
         <button onClick={() => { addCommand({})}}>Add</button>
+        <ToolButton onClick={() => { setDrawingMode('DRAW') }} active={drawingMode === 'DRAW'}>
+          <span role="img" aria-label="add shape">✒️ Add</span>
+        </ToolButton>
+        <ToolButton onClick={() => { setDrawingMode('EDIT') }} active={drawingMode === 'EDIT'}>
+          <span role="img" aria-label="edit shape">📍 Edit</span>
+        </ToolButton>
       </ToolsWrap>
     );
   }
@@ -24,6 +36,7 @@ class ToolsPalette extends Component {
 
 const mapStateToProps = state => {
   return {
+    drawingMode: state.drawingMode
   };
 }
 

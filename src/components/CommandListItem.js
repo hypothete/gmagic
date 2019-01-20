@@ -70,13 +70,13 @@ class CommandListItem extends Component {
         <EntryCtrls>
           <button onClick={this.moveUp}>
             <span role="img" aria-label="move command up">⬆️</span>
-            </button>
+          </button>
           <button onClick={this.remove}>
             <span role="img" aria-label="remove command">🗑️</span>
-            </button>
+          </button>
           <button onClick={this.moveDown}>
             <span role="img" aria-label="move command down">⬇️</span>
-            </button>
+          </button>
         </EntryCtrls>
       </ListEntry>
     );
