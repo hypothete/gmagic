@@ -66,7 +66,7 @@ class CommandListItem extends Component {
         onClick={this.selectItem}
         active={activeCommand === item.id}
       >
-        <span>{item.id}</span>
+        <span>{item.id}: {item.type.toLowerCase()}</span>
         <EntryCtrls>
           <button onClick={this.moveUp}>
             <span role="img" aria-label="move command up">⬆️</span>

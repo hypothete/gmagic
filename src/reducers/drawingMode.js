@@ -8,7 +8,7 @@ export default function drawingModeReducer(state = initialState.drawingMode, act
       return action.payload;
 
     case types.SET_ACTIVE_COMMAND:
-      return 'EDIT';
+      return 'EDIT_POINTS';
     
     default:
       return state;

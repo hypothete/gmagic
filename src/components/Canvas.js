@@ -20,6 +20,7 @@ class Canvas extends Component {
   constructor(props) {
     super(props);
     this.renderCanvas = this.renderCanvas.bind(this);
+    this.handleClicks = this.handleClicks.bind(this);
   }
 
   componentDidMount() {
@@ -90,9 +91,14 @@ class Canvas extends Component {
     });
   }
 
+  handleClicks(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
+
   render() {
     return (
-      <PixelCanvas ref="canvas"></PixelCanvas>
+      <PixelCanvas ref="canvas" onClick={this.handleClicks}></PixelCanvas>
     );
   }
 }

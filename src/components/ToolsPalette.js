@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -20,19 +20,31 @@ const ToolButton = styled.button`
 class ToolsPalette extends Component {
 
   render() {
-    const {setDrawingMode, drawingMode} = this.props;
+    const {addCommand, activeCommand, setDrawingMode, drawingMode} = this.props;
     return (
       <ToolsWrap>
         <ToolButton
-          onClick={() => {setDrawingMode('DRAW_LINE')}}
-          active={drawingMode === 'DRAW_LINE'}>
-          <span role="img" aria-label="add shape">✒️ Draw Line</span>
+          onClick={() => {addCommand({type: 'LINE', points: [], colorId: 0})}}>
+          <span role="img" aria-label="add line">✒️ Add Line</span>
         </ToolButton>
         <ToolButton
-          onClick={() => {setDrawingMode('DRAW_POLYGON')}}
-          active={drawingMode === 'DRAW_POLYGON'}>
-          <span role="img" aria-label="add shape">⭐ Draw Polygon</span>
+          onClick={() => {addCommand({type: 'POLYGON', points: [], colorId: 0})}}>
+          <span role="img" aria-label="add polygon">⭐ Add Polygon</span>
         </ToolButton>
+        {
+          activeCommand !== null && (
+            <Fragment>
+              <ToolButton
+                onClick={() => {setDrawingMode('ADD_POINTS')}} active={drawingMode === 'ADD_POINTS'}>
+                <span role="img" aria-label="add points">➕ Add Points</span>
+              </ToolButton>
+              <ToolButton
+                onClick={() => {setDrawingMode('EDIT_POINTS')}} active={drawingMode === 'EDIT_POINTS'}>
+                <span role="img" aria-label="edit points">📍 Edit Points</span>
+              </ToolButton>
+            </Fragment>
+          )
+        }
       </ToolsWrap>
     );
   }
@@ -40,8 +52,9 @@ class ToolsPalette extends Component {
 
 const mapStateToProps = state => {
   return {
+    activeCommand: state.activeCommand,
     drawingMode: state.drawingMode
   };
 }
 
-export default connect(mapStateToProps, {setDrawingMode})(ToolsPalette);
+export default connect(mapStateToProps, {addCommand, setDrawingMode})(ToolsPalette);
