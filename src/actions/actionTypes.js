@@ -1,2 +1,4 @@
 export const ADD_COMMAND = 'ADD_COMMAND';
 export const REMOVE_COMMAND = 'REMOVE_COMMAND';
+
+export const SET_ACTIVE_COMMAND = 'SET_ACTIVE_COMMAND';

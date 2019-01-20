@@ -1,3 +1,4 @@
 export default {
-  commands: []
+  commands: [],
+  activeCommand: null
 }
