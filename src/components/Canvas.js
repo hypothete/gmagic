@@ -7,8 +7,8 @@ import colors from '../utils/colors';
 import {addPoint, movePoint, removePoint} from '../actions/commands';
 
 const PixelCanvas = styled.canvas`
-  width: 256px;
-  height: 256px;
+  width: 384px;
+  height: 384px;
   image-rendering: optimizeSpeed;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-optimize-contrast;

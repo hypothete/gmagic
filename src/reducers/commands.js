@@ -95,6 +95,19 @@ export default function commandsReducer(state = initialState.commands, action) {
         return cmd;
       });
     }
+
+    case types.SET_COLOR: {
+      const {id, index} = action.payload;
+      return state.map(cmd => {
+        if (cmd.id === id) {
+          return {
+            ...cmd,
+            colorId: index
+          }
+        }
+        return cmd;
+      });
+    }
     
     default:
       return state;

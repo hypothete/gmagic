@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import {addCommand} from '../actions/commands';
 import {setDrawingMode} from '../actions/drawingMode';
 
+import ColorPalette from './ColorPalette';
+
 const ToolsWrap = styled.div`
   border: 2px inset;
   margin: 10px;
@@ -46,6 +48,7 @@ class ToolsPalette extends Component {
             </Fragment>
           )
         }
+        <ColorPalette></ColorPalette>
       </ToolsWrap>
     );
   }

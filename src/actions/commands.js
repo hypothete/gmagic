@@ -53,3 +53,10 @@ export function removePoint(id, index) {
     payload: { id, index }
   };
 }
+
+export function setColor(id, index) {
+  return {
+    type: types.SET_COLOR,
+    payload: { id, index }
+  };
+}
