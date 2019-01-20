@@ -82,6 +82,19 @@ export default function commandsReducer(state = initialState.commands, action) {
         return cmd;
       });
     }
+
+    case types.REMOVE_POINT: {
+      const {id, index} = action.payload;
+      return state.map(cmd => {
+        if (cmd.id === id) {
+          return {
+            ...cmd,
+            points: cmd.points.splice(index, 2)
+          }
+        }
+        return cmd;
+      });
+    }
     
     default:
       return state;

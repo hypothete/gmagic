@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 import colors from '../utils/colors';
 
-import {addPoint, movePoint} from '../actions/commands';
+import {addPoint, movePoint, removePoint} from '../actions/commands';
 
 const PixelCanvas = styled.canvas`
-  width: 512px;
-  height: 512px;
+  width: 256px;
+  height: 256px;
   image-rendering: optimizeSpeed;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-optimize-contrast;
@@ -17,6 +17,7 @@ const PixelCanvas = styled.canvas`
   -ms-interpolation-mode: nearest-neighbor;
   box-shadow: 0px 10px 10px rgba(0,0,0,0.5);
   flex-shrink: 0;
+  z-index: 1;
 `;
 
 class Canvas extends Component {
@@ -27,6 +28,7 @@ class Canvas extends Component {
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleContextMenu = this.handleContextMenu.bind(this);
 
     this.state = {
       dragIndex: -1
@@ -48,6 +50,7 @@ class Canvas extends Component {
     this.ctx.clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
     const {commands, activeCommand} = props;
     const cmds = [...commands].reverse();
+    let activeCmd;
     cmds.forEach(cmd => {
       switch(cmd.type) {
         case 'POLYGON': {
@@ -87,15 +90,20 @@ class Canvas extends Component {
           return;
       }
       if(cmd.id === activeCommand) {
-        // draw points
-        this.ctx.strokeStyle = colors[cmd.colorId];
-        for (let i=0; i< cmd.points.length; i+=2) {
-          const x = cmd.points[i] - 0.5;
-          const y = cmd.points[i+1] - 0.5;
-          this.ctx.strokeRect(x-2, y-2, 4, 4);
-        }
+        activeCmd = cmd;
       }
     });
+    if(activeCmd) {
+      // draw points
+      this.ctx.globalCompositeOperation = 'xor';
+      this.ctx.strokeStyle = colors[activeCmd.colorId];
+      for (let i=0; i< activeCmd.points.length; i+=2) {
+        const x = activeCmd.points[i] - 0.5;
+        const y = activeCmd.points[i+1] - 0.5;
+        this.ctx.strokeRect(x-2, y-2, 4, 4);
+      }
+      this.ctx.globalCompositeOperation = 'source-over';
+    }
   }
 
   convert(evt) {
@@ -111,16 +119,8 @@ class Canvas extends Component {
     return Math.pow(b.x-a.x, 2) + Math.pow(b.y - a.y, 2);
   }
 
-  handleClick(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-  }
-
-  handleMouseDown(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
+  getNearestPoint(evt) {
     const xy = this.convert(evt);
-    if (!this.props.activeCommand || this.props.drawingMode !== 'EDIT_POINTS') return;
     const cmd = this.props.commands.find(someCmd => someCmd.id === this.props.activeCommand);
     // check dist to points
     let nearest = -1;
@@ -130,11 +130,29 @@ class Canvas extends Component {
         y: cmd.points[i+1]
       };
       const dist = this.dist(pt, xy);
-      if (dist < 4) {
+      if (dist < 8) {
         nearest = i;
         break;
       }
     }
+    return nearest;
+  }
+
+  handleClick(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    if (!this.props.activeCommand) return;
+    if (this.props.drawingMode === 'EDIT_POINTS') return;
+    // add point
+    const { x, y } = this.convert(evt);
+    this.props.addPoint(this.props.activeCommand, x, y);
+  }
+
+  handleMouseDown(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    if (!this.props.activeCommand || this.props.drawingMode !== 'EDIT_POINTS') return;
+    const nearest = this.getNearestPoint(evt);
     if (nearest >= 0) {
       // found a point
       this.setState({
@@ -160,6 +178,12 @@ class Canvas extends Component {
     });
   }
 
+  handleContextMenu(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    return false;
+  }
+
   render() {
     return (
       <PixelCanvas ref="canvas"
@@ -167,6 +191,7 @@ class Canvas extends Component {
         onMouseMove={this.handleMouseMove}
         onMouseUp={this.handleMouseUp}
         onClick={this.handleClick}
+        onContextMenu={this.handleContextMenu}
       ></PixelCanvas>
     );
   }
@@ -180,4 +205,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, {addPoint, movePoint})(Canvas);
+export default connect(mapStateToProps, {addPoint, movePoint, removePoint})(Canvas);

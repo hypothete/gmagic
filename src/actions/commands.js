@@ -46,3 +46,10 @@ export function addPoint(id, x, y) {
     payload: { id, x, y }
   };
 }
+
+export function removePoint(id, index) {
+  return {
+    type: types.REMOVE_POINT,
+    payload: { id, index }
+  };
+}

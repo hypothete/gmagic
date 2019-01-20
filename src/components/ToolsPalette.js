@@ -9,6 +9,7 @@ const ToolsWrap = styled.div`
   border: 2px inset;
   margin: 10px;
   flex: 1;
+  z-index: 2;
 `;
 
 const ToolButton = styled.button`
