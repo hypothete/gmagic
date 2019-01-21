@@ -19,6 +19,7 @@ const CanvasFrame = styled.div`
 
 const ZoomCtrls = styled.div`
   position: absolute;
+  display: ${props => props.dragging ? 'none' : 'block' };
   z-index: 3;
   left: 10px;
   top: 10px;
@@ -52,7 +53,7 @@ class Canvas extends Component {
 
     this.state = {
       dragIndex: -1,
-      scale: 1024
+      scale: 512
     }
   }
 
@@ -229,7 +230,7 @@ class Canvas extends Component {
             onContextMenu={this.handleContextMenu}
           ></PixelCanvas>
         </CanvasFrame>
-        <ZoomCtrls>
+        <ZoomCtrls dragging={this.state.dragIndex > -1}>
         <button onClick={this.zoomIn}><span role="img" aria-label="zoom in">➕</span></button>
         <button onClick={this.zoomOut}><span role="img" aria-label="zoom out">➖</span></button>
         </ZoomCtrls>
