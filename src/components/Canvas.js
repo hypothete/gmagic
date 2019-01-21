@@ -15,6 +15,7 @@ const CanvasFrame = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   background-color: darkgray;
+  margin-right: 10px;
 `;
 
 const ZoomCtrls = styled.div`

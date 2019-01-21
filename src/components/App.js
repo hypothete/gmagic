@@ -13,7 +13,7 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 10px 0;
+  margin: 0;
 `;
 
 const Wrap = styled.div`

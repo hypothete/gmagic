@@ -3,13 +3,20 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import {setActiveCommand} from '../actions/activeCommand';
-import {moveCommandUp, moveCommandDown, removeCommand, nameCommand} from '../actions/commands'; 
+import {moveCommandUp, moveCommandDown, removeCommand, nameCommand} from '../actions/commands';
+
+import colors from '../utils/colors';
+
+const typeToEmoji = {
+  'LINE': '✒️',
+  'POLYGON': '⭐'
+};
 
 const ListEntry = styled.div`
   width: 100%;
   border-bottom: 2px outset;
   padding: 10px;
-  background-color: ${props => props.active ? 'gray' : 'white'}
+  background-color: ${props => props.active ? 'darkgray' : 'white'}
   display: flex;
   justify-content: flex-end;
 `;
@@ -17,7 +24,7 @@ const ListEntry = styled.div`
 const EntryCtrls = styled.div`
   display: flex;
   height: 100%;
-  width: 1em;
+  width: 3em;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -27,11 +34,24 @@ const EntryCtrls = styled.div`
 const EntryText = styled.div`
   display: flex;
   height: 100%;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 10px;
   flex: 1;
+`;
+
+const EntrySwatch = styled.div`
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  background-color: ${props => props.color};
+  border: 2px inset;
+`;
+
+const EntrySwatches = styled.div`
+  width: 3em;
+  height: 3em;
 `;
 
 class CommandListItem extends Component {
@@ -83,9 +103,12 @@ class CommandListItem extends Component {
         active={activeCommand === item.id}
       >
         <EntryText>
-          <span>{item.id}: {item.type.toLowerCase()}</span>
+          <span role="img" aria-label={item.type}>{typeToEmoji[item.type]}</span>
           <input type="text" value={item.name} onChange={this.handleNameChange} />
         </EntryText>
+        <EntrySwatches>
+          <EntrySwatch color={colors[item.colorId]}></EntrySwatch>
+        </EntrySwatches>
         <EntryCtrls>
           <button onClick={this.moveUp}>
             <span role="img" aria-label="move command up">⬆️</span>
