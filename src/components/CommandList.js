@@ -6,9 +6,10 @@ import CommandListItem from './CommandListItem';
 
 const StyledList = styled.div`
   border: 2px inset;
-  min-width: 200px;
+  width: 300px;
   max-height: 80vh;
   overflow-y: scroll;
+  margin-right: 10px;
 `;
 
 class CommandList extends Component {

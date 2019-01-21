@@ -10,7 +10,7 @@ const PaletteWrap = styled.div`
   margin: 10px;
   display: flex;
   flex-direction: row;
-  justify-conent: center;
+  justify-content: center;
 `;
 
 const Swatch = styled.div`

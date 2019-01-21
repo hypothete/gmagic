@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import {setActiveCommand} from '../actions/activeCommand';
-import {moveCommandUp, moveCommandDown, removeCommand} from '../actions/commands'; 
+import {moveCommandUp, moveCommandDown, removeCommand, nameCommand} from '../actions/commands'; 
 
 const ListEntry = styled.div`
   width: 100%;
@@ -11,7 +11,7 @@ const ListEntry = styled.div`
   padding: 10px;
   background-color: ${props => props.active ? 'gray' : 'white'}
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 `;
 
 const EntryCtrls = styled.div`
@@ -21,6 +21,17 @@ const EntryCtrls = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin-right: 5px;
+`;
+
+const EntryText = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+  flex: 1;
 `;
 
 class CommandListItem extends Component {
@@ -30,6 +41,7 @@ class CommandListItem extends Component {
     this.moveUp = this.moveUp.bind(this);
     this.moveDown = this.moveDown.bind(this);
     this.remove = this.remove.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
   }
 
   selectItem() {
@@ -56,6 +68,10 @@ class CommandListItem extends Component {
     this.props.removeCommand(this.props.item);
   }
 
+  handleNameChange(evt) {
+    this.props.nameCommand(this.props.item.id, evt.target.value);
+  }
+
   render() {
     const {
       item,
@@ -66,7 +82,10 @@ class CommandListItem extends Component {
         onClick={this.selectItem}
         active={activeCommand === item.id}
       >
-        <span>{item.id}: {item.type.toLowerCase()}</span>
+        <EntryText>
+          <span>{item.id}: {item.type.toLowerCase()}</span>
+          <input type="text" value={item.name} onChange={this.handleNameChange} />
+        </EntryText>
         <EntryCtrls>
           <button onClick={this.moveUp}>
             <span role="img" aria-label="move command up">⬆️</span>
@@ -93,7 +112,8 @@ const mapDispatchToProps = {
   setActiveCommand,
   moveCommandUp,
   moveCommandDown,
-  removeCommand
+  removeCommand,
+  nameCommand
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommandListItem);

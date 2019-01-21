@@ -7,7 +7,13 @@ export default function commandsReducer(state = initialState.commands, action) {
     case types.ADD_COMMAND:
       return [
         ...state,
-        action.payload
+        {
+          id: action.payload.id,
+          name: '',
+          type: action.payload.type,
+          points: [],
+          colorId: 0
+        }
       ];
     
     case types.REMOVE_COMMAND:
@@ -103,6 +109,19 @@ export default function commandsReducer(state = initialState.commands, action) {
           return {
             ...cmd,
             colorId: index
+          }
+        }
+        return cmd;
+      });
+    }
+
+    case types.NAME_COMMAND: {
+      const {id, name} = action.payload;
+      return state.map(cmd => {
+        if (cmd.id === id) {
+          return {
+            ...cmd,
+            name
           }
         }
         return cmd;

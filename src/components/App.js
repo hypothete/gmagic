@@ -10,7 +10,7 @@ const Row = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
   margin: 10px 0;
 `;

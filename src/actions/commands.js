@@ -2,11 +2,11 @@ import * as types from './actionTypes';
 
 let commandCount = 0;
 
-export function addCommand(command) {
+export function addCommand(type) {
   return {
     type: types.ADD_COMMAND,
     payload: {
-      ...command,
+      type,
       id: ++commandCount
     }
   };
@@ -59,4 +59,11 @@ export function setColor(id, index) {
     type: types.SET_COLOR,
     payload: { id, index }
   };
+}
+
+export function nameCommand(id, name) {
+  return {
+    type: types.NAME_COMMAND,
+    payload: {id, name}
+  }
 }

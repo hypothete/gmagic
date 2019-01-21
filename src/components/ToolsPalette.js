@@ -12,6 +12,9 @@ const ToolsWrap = styled.div`
   margin: 10px;
   flex: 1;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ToolButton = styled.button`
@@ -20,18 +23,23 @@ const ToolButton = styled.button`
   border-color: ${props => props.active ? 'blue' : 'none'};
 `;
 
+const ToolRow = styled.div`
+  min-height: 30px;
+`;
+
 class ToolsPalette extends Component {
 
   render() {
     const {addCommand, activeCommand, setDrawingMode, drawingMode} = this.props;
     return (
       <ToolsWrap>
+        <ToolRow>
         <ToolButton
-          onClick={() => {addCommand({type: 'LINE', points: [], colorId: 0})}}>
+          onClick={() => {addCommand('LINE')}}>
           <span role="img" aria-label="add line">✒️ Add Line</span>
         </ToolButton>
         <ToolButton
-          onClick={() => {addCommand({type: 'POLYGON', points: [], colorId: 0})}}>
+          onClick={() => {addCommand('POLYGON')}}>
           <span role="img" aria-label="add polygon">⭐ Add Polygon</span>
         </ToolButton>
         {
@@ -48,6 +56,7 @@ class ToolsPalette extends Component {
             </Fragment>
           )
         }
+        </ToolRow>
         <ColorPalette></ColorPalette>
       </ToolsWrap>
     );
