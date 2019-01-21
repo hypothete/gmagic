@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -6,18 +6,36 @@ import colors from '../utils/colors';
 
 import {addPoint, movePoint, removePoint} from '../actions/commands';
 
+const CanvasFrame = styled.div`
+  position: relative;
+  flex: 1;
+  height: 100%;
+  overflow: scroll;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: darkgray;
+`;
+
+const ZoomCtrls = styled.div`
+  position: absolute;
+  z-index: 3;
+  left: 10px;
+  top: 10px;
+`;
+
 const PixelCanvas = styled.canvas`
-  width: 384px;
-  height: 384px;
+  width: ${props => props.scale}px;
+  height: ${props => props.scale}px;
   image-rendering: optimizeSpeed;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: optimize-contrast;
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
-  box-shadow: 0px 10px 10px rgba(0,0,0,0.5);
-  flex-shrink: 0;
   z-index: 1;
+  background-color: white;
+  flex-shrink: 0;
 `;
 
 class Canvas extends Component {
@@ -29,9 +47,12 @@ class Canvas extends Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleContextMenu = this.handleContextMenu.bind(this);
+    this.zoomIn = this.zoomIn.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
 
     this.state = {
-      dragIndex: -1
+      dragIndex: -1,
+      scale: 1024
     }
   }
 
@@ -44,6 +65,18 @@ class Canvas extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.renderCanvas(nextProps);
+  }
+
+  zoomIn() {
+    this.setState({
+      scale: this.state.scale * 2
+    });
+  }
+
+  zoomOut() {
+    this.setState({
+      scale: this.state.scale / 2
+    });
   }
 
   renderCanvas(props) {
@@ -186,13 +219,21 @@ class Canvas extends Component {
 
   render() {
     return (
-      <PixelCanvas ref="canvas"
-        onMouseDown={this.handleMouseDown}
-        onMouseMove={this.handleMouseMove}
-        onMouseUp={this.handleMouseUp}
-        onClick={this.handleClick}
-        onContextMenu={this.handleContextMenu}
-      ></PixelCanvas>
+      <Fragment>
+        <CanvasFrame>
+          <PixelCanvas scale={this.state.scale} ref="canvas"
+            onMouseDown={this.handleMouseDown}
+            onMouseMove={this.handleMouseMove}
+            onMouseUp={this.handleMouseUp}
+            onClick={this.handleClick}
+            onContextMenu={this.handleContextMenu}
+          ></PixelCanvas>
+        </CanvasFrame>
+        <ZoomCtrls>
+        <button onClick={this.zoomIn}><span role="img" aria-label="zoom in">➕</span></button>
+        <button onClick={this.zoomOut}><span role="img" aria-label="zoom out">➖</span></button>
+        </ZoomCtrls>
+      </Fragment>
     );
   }
 }

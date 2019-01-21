@@ -7,7 +7,7 @@ import {moveCommandUp, moveCommandDown, removeCommand, nameCommand} from '../act
 
 const ListEntry = styled.div`
   width: 100%;
-  border: 2px outset;
+  border-bottom: 2px outset;
   padding: 10px;
   background-color: ${props => props.active ? 'gray' : 'white'}
   display: flex;

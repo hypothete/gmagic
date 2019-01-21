@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import CommandListItem from './CommandListItem';
 
 const StyledList = styled.div`
-  border: 2px inset;
+  border-bottom: 2px inset;
   width: 300px;
-  max-height: 80vh;
+  height: 100%;
   overflow-y: scroll;
   margin-right: 10px;
 `;
