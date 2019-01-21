@@ -1,6 +1,15 @@
 export default {
   commands: [
     {
+      id: 12346,
+      name: 'Line',
+      type: 'LINE',
+      points: [
+        32, 48, 96, 48, 32, 96
+      ],
+      colorId: 8
+    },
+    {
       id: 12345,
       name: 'Poly',
       type: 'POLYGON',
@@ -8,15 +17,6 @@ export default {
         64, 32, 96, 96, 32, 96
       ],
       colorId: 1
-    },
-    {
-      id: 12346,
-      name: 'Line',
-      type: 'LINE',
-      points: [
-        32, 32, 96, 32, 64, 96
-      ],
-      colorId: 8
     }
   ],
   activeCommand: null,

@@ -14,9 +14,10 @@ const PaletteWrap = styled.div`
 `;
 
 const Swatch = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   background-color: ${props => props.color};
+  border: 2px inset;
 `;
 
 class ToolsPalette extends Component {

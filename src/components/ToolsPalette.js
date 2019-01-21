@@ -8,7 +8,6 @@ import {setDrawingMode} from '../actions/drawingMode';
 import ColorPalette from './ColorPalette';
 
 const ToolsWrap = styled.div`
-  border: 2px inset;
   margin: 10px;
   flex: 1;
   z-index: 2;

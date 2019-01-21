@@ -5,11 +5,13 @@ import styled from 'styled-components';
 import CommandListItem from './CommandListItem';
 
 const StyledList = styled.div`
-  border-bottom: 2px inset;
+  border: 2px inset;
+  border-top: none;
   width: 300px;
   height: 100%;
   overflow-y: scroll;
-  margin-right: 10px;
+  margin: 0 10px 0 0;
+  padding-top: 10px;
 `;
 
 class CommandList extends Component {
