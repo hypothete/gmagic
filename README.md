@@ -1,4 +1,4 @@
-# GMagic
+# GMagic 🧙
 
 A vector image editor
 
