@@ -81,6 +81,50 @@ class Canvas extends Component {
     });
   }
 
+//   void plotLine(int x0, int y0, int x1, int y1)
+// {
+//    int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
+//    int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+//    int err = dx+dy, e2; /* error value e_xy */
+ 
+//    for(;;){  /* loop */
+//       setPixel(x0,y0);
+//       if (x0==x1 && y0==y1) break;
+//       e2 = 2*err;
+//       if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
+//       if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
+//    }
+// }
+  bresenham(x0, y0, x1, y1, col) {
+    const dx = Math.abs(x1 - x0);
+    const dy = -Math.abs(y1 - y0);
+    const sx = (x0 < x1) ? 1 : -1;
+    const sy = (y0 < y1) ? 1 : -1;
+    let x = x0, y = y0;
+    let err = dx + dy;
+    let e2;
+    let loopCt = 0;
+    this.ctx.fillStyle = col;
+    do {
+      loopCt++;
+      if (loopCt > 500) {
+        console.error(`error drawing line ${x0}, ${y0} to ${x1}, ${y1}`);
+        break;
+      }
+      this.ctx.fillRect(x-1, y-1, 1, 1);
+      if ((x===x1) && (y===y1)) break;
+      e2 = 2 * err;
+      if (e2 >= dy) {
+        err += dy;
+        x += sx;
+      }
+      if (e2 <= dx) {
+        err += dx;
+        y += sy;
+      }
+    } while ((x !== x1) || (y !== y1));
+  }
+
   renderCanvas(props) {
     this.ctx.clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
     const {commands, activeCommand} = props;
@@ -106,19 +150,13 @@ class Canvas extends Component {
           break;
         }
         case 'LINE': {
-          this.ctx.strokeStyle = colors[cmd.colorId];
-          this.ctx.beginPath();
-          for (let i=0; i< cmd.points.length; i+=2) {
-            const x = cmd.points[i] - 0.5;
-            const y = cmd.points[i+1] - 0.5;
-            if (i === 0) {
-              this.ctx.moveTo(x,y);
-            }
-            else {
-              this.ctx.lineTo(x,y);
-            }
+          for (let i = 0; i < cmd.points.length-3; i+=2) {
+            const x0 = cmd.points[i];
+            const y0 = cmd.points[i+1];
+            const x1 = cmd.points[i+2];
+            const y1 = cmd.points[i+3];
+            this.bresenham(x0, y0, x1, y1, colors[cmd.colorId]);
           }
-          this.ctx.stroke();
           break;
         }
         default:
@@ -135,7 +173,7 @@ class Canvas extends Component {
       for (let i=0; i< activeCmd.points.length; i+=2) {
         const x = activeCmd.points[i] - 0.5;
         const y = activeCmd.points[i+1] - 0.5;
-        this.ctx.strokeRect(x-2, y-2, 4, 4);
+        this.ctx.strokeRect(x-1, y-1, 2, 2);
       }
       this.ctx.globalCompositeOperation = 'source-over';
     }
