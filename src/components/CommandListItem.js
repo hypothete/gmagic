@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import {setActiveCommand} from '../actions/activeCommand';
 import {moveCommandUp, moveCommandDown, removeCommand, nameCommand} from '../actions/commands';
 
-import colors from '../utils/colors';
+import {hex} from '../utils/colors';
 
 const typeToEmoji = {
   'LINE': '✒️',
@@ -107,7 +107,7 @@ class CommandListItem extends Component {
           <input type="text" value={item.name} onChange={this.handleNameChange} />
         </EntryText>
         <EntrySwatches>
-          <EntrySwatch color={colors[item.colorId]}></EntrySwatch>
+          <EntrySwatch color={hex[item.colorId]}></EntrySwatch>
         </EntrySwatches>
         <EntryCtrls>
           <button onClick={this.moveUp}>

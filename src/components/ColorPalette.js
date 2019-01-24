@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import {setColor} from '../actions/commands';
 
-import colors from '../utils/colors';
+import {hex} from '../utils/colors';
 
 const PaletteWrap = styled.div`
   margin: 10px;
@@ -27,7 +27,7 @@ class ToolsPalette extends Component {
     return (
       <PaletteWrap>
         {
-          colors.map((col, index) =>(
+          hex.map((col, index) =>(
             <Swatch color={col} key={index}
               onClick={() => {setColor(activeCommand, index)}}>
             </Swatch>

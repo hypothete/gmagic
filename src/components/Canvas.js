@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import colors from '../utils/colors';
+import {hex, rgb} from '../utils/colors';
 
 import {addPoint, movePoint, removePoint} from '../actions/commands';
 
@@ -112,6 +112,59 @@ class Canvas extends Component {
     } while ((x !== x1) || (y !== y1));
   }
 
+  polygon(pts, col) {
+    // http://alienryderflex.com/polygon_fill/
+    const polyCorners = pts.length / 2;
+    const polyX = [];
+    const polyY = [];
+    // sort out XY arrays
+    for (let h=0; h<pts.length; h+=2) {
+      polyX.push(pts[h]);
+      polyY.push(pts[h+1]);
+    }
+    //build node list
+    for (let y=0; y<this.refs.canvas.height; y++) {
+      const nodeX = [];
+      let nodes = 0;
+      let j = polyCorners - 1;
+      for (let i=0; i<polyCorners; i++) {
+        if (
+          ((polyY[i] < y) && (polyY[j] >= y)) ||
+          ((polyY[j] < y) && (polyY[i] >= y))
+        ) {
+          nodeX[nodes++] = (
+            polyX[i] +
+            Math.round((y-polyY[i])/(polyY[j]-polyY[i]) *
+            (polyX[j] - polyX[i]))
+          );
+        }
+        j = i;
+      }
+      // sort nodes
+      let k=0;
+      while(k < nodes-1) {
+        if (nodeX[k] > nodeX[k+1]) {
+          let swap = nodeX[k];
+          nodeX[k] = nodeX[k+1];
+          nodeX[k+1] = swap;
+          if (k) k--;
+        }
+        else {
+          k++;
+        }
+      }
+      // fill the pixels between pairs
+      for (let l=0; l<nodes; l+=2) {
+        if (nodeX[l] >= this.refs.canvas.width) break;
+        if (nodeX[l+1] > 0) {
+          if (nodeX[l] < 0) nodeX[l] = 0;
+          if (nodeX[l+1] > this.refs.canvas.width) nodeX[l+1] = this.refs.canvas.width;
+          this.bresenham(nodeX[l], y, nodeX[l+1], y, col);
+        }
+      }
+    }
+  }
+
   renderCanvas(props) {
     this.ctx.clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
     const {commands, activeCommand} = props;
@@ -120,20 +173,21 @@ class Canvas extends Component {
     cmds.forEach(cmd => {
       switch(cmd.type) {
         case 'POLYGON': {
-          this.ctx.fillStyle = colors[cmd.colorId];
-          this.ctx.beginPath();
-          for (let i=0; i< cmd.points.length; i+=2) {
-            const x = cmd.points[i] - 0.5;
-            const y = cmd.points[i+1] - 0.5;
-            if (i === 0) {
-              this.ctx.moveTo(x,y);
-            }
-            else {
-              this.ctx.lineTo(x,y);
-            }
-          }
-          this.ctx.closePath();
-          this.ctx.fill();
+          this.polygon(cmd.points,  hex[cmd.colorId]);
+          // this.ctx.fillStyle = hex[cmd.colorId];
+          // this.ctx.beginPath();
+          // for (let i=0; i< cmd.points.length; i+=2) {
+          //   const x = cmd.points[i] - 0.5;
+          //   const y = cmd.points[i+1] - 0.5;
+          //   if (i === 0) {
+          //     this.ctx.moveTo(x,y);
+          //   }
+          //   else {
+          //     this.ctx.lineTo(x,y);
+          //   }
+          // }
+          // this.ctx.closePath();
+          // this.ctx.fill();
           break;
         }
         case 'LINE': {
@@ -142,7 +196,7 @@ class Canvas extends Component {
             const y0 = cmd.points[i+1];
             const x1 = cmd.points[i+2];
             const y1 = cmd.points[i+3];
-            this.bresenham(x0, y0, x1, y1, colors[cmd.colorId]);
+            this.bresenham(x0, y0, x1, y1, hex[cmd.colorId]);
           }
           break;
         }
@@ -156,7 +210,7 @@ class Canvas extends Component {
     if(activeCmd) {
       // draw points
       this.ctx.globalCompositeOperation = 'xor';
-      this.ctx.strokeStyle = colors[activeCmd.colorId];
+      this.ctx.strokeStyle = hex[activeCmd.colorId];
       for (let i=0; i< activeCmd.points.length; i+=2) {
         const x = activeCmd.points[i] - 0.5;
         const y = activeCmd.points[i+1] - 0.5;
