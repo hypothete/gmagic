@@ -296,7 +296,7 @@ class Canvas extends Component {
 
   render() {
     return [
-      <CanvasFrame onMouseUp={this.handleMouseUp}>
+      <CanvasFrame key="frame" onMouseUp={this.handleMouseUp}>
         <PixelCanvas scale={this.state.scale} ref="canvas"
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
@@ -304,9 +304,9 @@ class Canvas extends Component {
           onContextMenu={this.handleContextMenu}
         ></PixelCanvas>
       </CanvasFrame>,
-      <ZoomCtrls dragging={this.state.dragIndex > -1}>
-      <button onClick={this.zoomIn}><span role="img" aria-label="zoom in">➕</span></button>
-      <button onClick={this.zoomOut}><span role="img" aria-label="zoom out">➖</span></button>
+      <ZoomCtrls key="ctrls" dragging={this.state.dragIndex > -1}>
+        <button onClick={this.zoomIn}><span role="img" aria-label="zoom in">➕</span></button>
+        <button onClick={this.zoomOut}><span role="img" aria-label="zoom out">➖</span></button>
       </ZoomCtrls>
     ];
   }

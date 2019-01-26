@@ -77,7 +77,7 @@ class ToolsPalette extends Component {
           <ColorPalette index={1}></ColorPalette>
         </ToolsColumn>
         <ToolsColumn>
-        { activeCommand && <PatternToggle></PatternToggle>}
+          <PatternToggle></PatternToggle>
         </ToolsColumn>
       </ToolsWrap>
     );
