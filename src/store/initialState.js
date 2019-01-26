@@ -8,7 +8,12 @@ export default {
         32, 48, 96, 48, 32, 96
       ],
       colors: [8,0],
-      pattern: []
+      pattern: [
+        true, false, false, false,
+        false, true, false, false,
+        false, false, true, false,
+        false, false, false, true
+      ]
     },
     {
       id: 12345,
@@ -18,7 +23,12 @@ export default {
         64, 32, 96, 96, 32, 96
       ],
       colors: [1,0],
-      pattern: []
+      pattern: [
+        false, false, false, false,
+        false, true, true, false,
+        false, true, true, false,
+        false, false, false, false
+      ]
     }
   ],
   activeCommand: null,

@@ -67,3 +67,10 @@ export function nameCommand(id, name) {
     payload: {id, name}
   }
 }
+
+export function setPattern(id, pattern) {
+  return {
+    type: types.SET_PATTERN,
+    payload: {id, pattern}
+  }
+}

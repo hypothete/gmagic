@@ -13,7 +13,12 @@ export default function commandsReducer(state = initialState.commands, action) {
           type: action.payload.type,
           points: [],
           colors: [0,0],
-          pattern: []
+          pattern: [
+            false, false, false, false,
+            false, false, false, false,
+            false, false, false, false,
+            false, false, false, false
+          ]
         }
       ];
     
@@ -128,6 +133,19 @@ export default function commandsReducer(state = initialState.commands, action) {
           return {
             ...cmd,
             name
+          }
+        }
+        return cmd;
+      });
+    }
+
+    case types.SET_PATTERN: {
+      const {id, pattern} = action.payload;
+      return state.map(cmd => {
+        if (cmd.id === id) {
+          return {
+            ...cmd,
+            pattern: [...pattern]
           }
         }
         return cmd;
