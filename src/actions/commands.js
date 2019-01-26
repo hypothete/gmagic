@@ -74,3 +74,13 @@ export function setPattern(id, pattern) {
     payload: {id, pattern}
   }
 }
+
+export function addBackground() {
+  return {
+    type: types.ADD_BACKGROUND,
+    payload: {
+      type: 'POLYGON',
+      id: ++commandCount
+    }
+  }
+}

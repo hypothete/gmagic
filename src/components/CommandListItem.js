@@ -112,13 +112,13 @@ class CommandListItem extends Component {
         </EntrySwatches>
         <EntryCtrls>
           <button onClick={this.moveUp}>
-            <span role="img" aria-label="move command up">⬆️</span>
+            <span role="img" aria-label="move command up">🔼</span>
           </button>
           <button onClick={this.remove}>
             <span role="img" aria-label="remove command">🗑️</span>
           </button>
           <button onClick={this.moveDown}>
-            <span role="img" aria-label="move command down">⬇️</span>
+            <span role="img" aria-label="move command down">🔽</span>
           </button>
         </EntryCtrls>
       </ListEntry>

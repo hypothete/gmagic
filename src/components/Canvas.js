@@ -42,6 +42,10 @@ const PixelCanvas = styled.canvas`
   box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
 `;
 
+function clamp(val, min, max) {
+  return Math.max(Math.min(max, val), min);
+}
+
 class Canvas extends Component {
   constructor(props) {
     super(props);
@@ -89,7 +93,7 @@ class Canvas extends Component {
     const pc = py * 4 + px;
     const pf = pattern[pc];
     this.ctx.fillStyle = hex[colors[pf ? 1 : 0]];
-    this.ctx.fillRect(x-1, y-1,1,1);
+    this.ctx.fillRect(x, y,1,1);
   }
 
   // based on http://members.chello.at/~easyfilter/bresenham.html
@@ -119,7 +123,7 @@ class Canvas extends Component {
         err += dx;
         y += sy;
       }
-    } while ((x !== x1) || (y !== y1));
+    } while (true);
   }
 
   polygon(pts, colors, pattern) {
@@ -144,7 +148,7 @@ class Canvas extends Component {
         ) {
           nodeX[nodes++] = (
             polyX[i] +
-            Math.round((y-polyY[i])/(polyY[j]-polyY[i]) *
+            Math.round((y-polyY[i])/(polyY[j]-polyY[i] + 0.0001) * // fudge for 0/0
             (polyX[j] - polyX[i]))
           );
         }
@@ -168,7 +172,7 @@ class Canvas extends Component {
         if (nodeX[l] >= this.refs.canvas.width) break;
         if (nodeX[l+1] > 0) {
           if (nodeX[l] < 0) nodeX[l] = 0;
-          if (nodeX[l+1] > this.refs.canvas.width) nodeX[l+1] = this.refs.canvas.width;
+          if (nodeX[l+1] > this.refs.canvas.width) nodeX[l+1] = this.refs.canvas.width-1;
           this.bresenham(nodeX[l], y, nodeX[l+1], y, colors, pattern);
         }
       }
@@ -219,8 +223,8 @@ class Canvas extends Component {
   convert(evt) {
     const rect = this.refs.canvas.getBoundingClientRect();
     return {
-      x: Math.floor(this.refs.canvas.width * (evt.clientX - rect.left) / rect.width),
-      y: Math.floor(this.refs.canvas.height * (evt.clientY - rect.top) / rect.height)
+      x: clamp(Math.floor(this.refs.canvas.width * (evt.clientX - rect.left) / rect.width), 0, this.refs.canvas.width),
+      y: clamp(Math.floor(this.refs.canvas.height * (evt.clientY - rect.top) / rect.height), 0, this.refs.canvas.height)
     };
   }
 
@@ -296,10 +300,9 @@ class Canvas extends Component {
 
   render() {
     return [
-      <CanvasFrame key="frame" onMouseUp={this.handleMouseUp}>
+      <CanvasFrame key="frame" onMouseUp={this.handleMouseUp} onMouseMove={this.handleMouseMove}>
         <PixelCanvas scale={this.state.scale} ref="canvas"
           onMouseDown={this.handleMouseDown}
-          onMouseMove={this.handleMouseMove}
           onClick={this.handleClick}
           onContextMenu={this.handleContextMenu}
         ></PixelCanvas>

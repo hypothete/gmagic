@@ -27,6 +27,24 @@ export default function commandsReducer(state = initialState.commands, action) {
         ...state.filter(comm => comm.id !== action.payload.id)
       ];
 
+      case types.ADD_BACKGROUND:
+      return [
+        {
+          id: action.payload.id,
+          name: `Background-${action.payload.id}`,
+          type: action.payload.type,
+          points: [0,0, 127,0, 127,127, 0,127],
+          colors: [7,0],
+          pattern: [
+            false, false, false, false,
+            false, false, false, false,
+            false, false, false, false,
+            false, false, false, false
+          ]
+        },
+        ...state
+      ];
+
     case types.MOVE_COMMAND_UP: {
       let foundCmdIndex = state.findIndex(cmd => cmd.id === action.payload.id);
       if (foundCmdIndex <= 0) {

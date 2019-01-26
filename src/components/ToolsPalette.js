@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import {addCommand} from '../actions/commands';
+import {addCommand, addBackground} from '../actions/commands';
 import {setDrawingMode} from '../actions/drawingMode';
 
 import ColorPalette from './ColorPalette';
@@ -41,7 +41,7 @@ const ToolRow = styled.div`
 class ToolsPalette extends Component {
 
   render() {
-    const {addCommand, activeCommand, setDrawingMode, drawingMode} = this.props;
+    const {addCommand, activeCommand, setDrawingMode, drawingMode, addBackground} = this.props;
     return (
       <ToolsWrap>
         <ToolsColumn>
@@ -53,6 +53,10 @@ class ToolsPalette extends Component {
           <ToolButton
             onClick={() => {addCommand('POLYGON')}}>
             <span role="img" aria-label="add polygon">⭐ Add Polygon</span>
+          </ToolButton>
+          <ToolButton
+            onClick={() => {addBackground()}}>
+            <span role="img" aria-label="add background">🖼️ Add Background</span>
           </ToolButton>
           </ToolRow>
           <ToolRow>
@@ -91,4 +95,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, {addCommand, setDrawingMode})(ToolsPalette);
+export default connect(mapStateToProps, {addCommand, addBackground, setDrawingMode})(ToolsPalette);

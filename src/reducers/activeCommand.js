@@ -10,6 +10,10 @@ export default function activeCommandReducer(state = initialState.activeCommand,
     // when addCommand is called, set that command to active
     case types.ADD_COMMAND:
       return action.payload.id;
+    
+    case types.REMOVE_COMMAND: {
+      return (action.payload.id === state) ? null : state;
+    }
 
     default:
       return state;
