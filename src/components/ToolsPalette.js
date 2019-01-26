@@ -56,7 +56,8 @@ class ToolsPalette extends Component {
           )
         }
         </ToolRow>
-        <ColorPalette></ColorPalette>
+        <ColorPalette index={0}></ColorPalette>
+        <ColorPalette index={1}></ColorPalette>
       </ToolsWrap>
     );
   }

@@ -12,7 +12,8 @@ export default function commandsReducer(state = initialState.commands, action) {
           name: '',
           type: action.payload.type,
           points: [],
-          colorId: 0
+          colors: [0,0],
+          pattern: []
         }
       ];
     
@@ -103,12 +104,17 @@ export default function commandsReducer(state = initialState.commands, action) {
     }
 
     case types.SET_COLOR: {
-      const {id, index} = action.payload;
+      const {id, color, index} = action.payload;
       return state.map(cmd => {
         if (cmd.id === id) {
           return {
             ...cmd,
-            colorId: index
+            colors: cmd.colors.map((someCol, someIndex) => {
+              if (index === someIndex) {
+                return color;
+              }
+              return someCol;
+            })
           }
         }
         return cmd;

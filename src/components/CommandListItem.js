@@ -107,7 +107,8 @@ class CommandListItem extends Component {
           <input type="text" value={item.name} onChange={this.handleNameChange} />
         </EntryText>
         <EntrySwatches>
-          <EntrySwatch color={hex[item.colorId]}></EntrySwatch>
+          <EntrySwatch color={hex[item.colors[0]]}></EntrySwatch>
+          <EntrySwatch color={hex[item.colors[1]]}></EntrySwatch>
         </EntrySwatches>
         <EntryCtrls>
           <button onClick={this.moveUp}>

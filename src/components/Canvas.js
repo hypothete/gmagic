@@ -82,7 +82,7 @@ class Canvas extends Component {
   }
 
   // based on http://members.chello.at/~easyfilter/bresenham.html
-  bresenham(x0, y0, x1, y1, col) {
+  bresenham(x0, y0, x1, y1, colors) {
     const dx = Math.abs(x1 - x0);
     const dy = -Math.abs(y1 - y0);
     const sx = (x0 < x1) ? 1 : -1;
@@ -91,7 +91,7 @@ class Canvas extends Component {
     let err = dx + dy;
     let e2;
     let loopCt = 0;
-    this.ctx.fillStyle = col;
+    this.ctx.fillStyle = hex[colors[0]];
     do {
       loopCt++;
       if (loopCt > 500) {
@@ -112,7 +112,7 @@ class Canvas extends Component {
     } while ((x !== x1) || (y !== y1));
   }
 
-  polygon(pts, col) {
+  polygon(pts, colors) {
     // http://alienryderflex.com/polygon_fill/
     const polyCorners = pts.length / 2;
     const polyX = [];
@@ -159,7 +159,7 @@ class Canvas extends Component {
         if (nodeX[l+1] > 0) {
           if (nodeX[l] < 0) nodeX[l] = 0;
           if (nodeX[l+1] > this.refs.canvas.width) nodeX[l+1] = this.refs.canvas.width;
-          this.bresenham(nodeX[l], y, nodeX[l+1], y, col);
+          this.bresenham(nodeX[l], y, nodeX[l+1], y, colors);
         }
       }
     }
@@ -173,21 +173,7 @@ class Canvas extends Component {
     cmds.forEach(cmd => {
       switch(cmd.type) {
         case 'POLYGON': {
-          this.polygon(cmd.points,  hex[cmd.colorId]);
-          // this.ctx.fillStyle = hex[cmd.colorId];
-          // this.ctx.beginPath();
-          // for (let i=0; i< cmd.points.length; i+=2) {
-          //   const x = cmd.points[i] - 0.5;
-          //   const y = cmd.points[i+1] - 0.5;
-          //   if (i === 0) {
-          //     this.ctx.moveTo(x,y);
-          //   }
-          //   else {
-          //     this.ctx.lineTo(x,y);
-          //   }
-          // }
-          // this.ctx.closePath();
-          // this.ctx.fill();
+          this.polygon(cmd.points,  cmd.colors);
           break;
         }
         case 'LINE': {
@@ -196,7 +182,7 @@ class Canvas extends Component {
             const y0 = cmd.points[i+1];
             const x1 = cmd.points[i+2];
             const y1 = cmd.points[i+3];
-            this.bresenham(x0, y0, x1, y1, hex[cmd.colorId]);
+            this.bresenham(x0, y0, x1, y1, cmd.colors);
           }
           break;
         }

@@ -7,7 +7,8 @@ export default {
       points: [
         32, 48, 96, 48, 32, 96
       ],
-      colorId: 8
+      colors: [8,0],
+      pattern: []
     },
     {
       id: 12345,
@@ -16,7 +17,8 @@ export default {
       points: [
         64, 32, 96, 96, 32, 96
       ],
-      colorId: 1
+      colors: [1,0],
+      pattern: []
     }
   ],
   activeCommand: null,

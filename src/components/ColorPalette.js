@@ -23,13 +23,13 @@ const Swatch = styled.div`
 class ToolsPalette extends Component {
 
   render() {
-    const {activeCommand, setColor} = this.props;
+    const {activeCommand, setColor, index} = this.props;
     return (
       <PaletteWrap>
         {
-          hex.map((col, index) =>(
-            <Swatch color={col} key={index}
-              onClick={() => {setColor(activeCommand, index)}}>
+          hex.map((col, color) =>(
+            <Swatch color={col} key={color}
+              onClick={() => {setColor(activeCommand, color, index)}}>
             </Swatch>
           ))
         }
