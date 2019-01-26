@@ -17,19 +17,35 @@ const Swatch = styled.div`
   width: 20px;
   height: 20px;
   background-color: ${props => props.color};
-  border: 2px inset;
+  border: 2px  ${props => props.active? 'dashed' : 'inset'};
+  border-color:  ${props => props.active? 'black' : 'auto'};
 `;
 
-class ToolsPalette extends Component {
+class ColorPalette extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeIndex: -1
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const activeCmd = nextProps.commands.find(cmd => cmd.id === nextProps.activeCommand);
+    if (activeCmd) {
+      this.setState({
+        activeIndex: activeCmd.colors[nextProps.index]
+      });
+    }
+  }
 
   render() {
     const {activeCommand, setColor, index} = this.props;
     return (
       <PaletteWrap>
         {
-          hex.map((col, color) =>(
-            <Swatch color={col} key={color}
-              onClick={() => {setColor(activeCommand, color, index)}}>
+          hex.map((col, colorIndex) =>(
+            <Swatch color={col} key={colorIndex} active={this.state.activeIndex === colorIndex}
+              onClick={() => {setColor(activeCommand, colorIndex, index)}}>
             </Swatch>
           ))
         }
@@ -40,8 +56,9 @@ class ToolsPalette extends Component {
 
 const mapStateToProps = state => {
   return {
-    activeCommand: state.activeCommand
+    activeCommand: state.activeCommand,
+    commands: state.commands
   };
 }
 
-export default connect(mapStateToProps, {setColor})(ToolsPalette);
+export default connect(mapStateToProps, {setColor})(ColorPalette);

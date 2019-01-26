@@ -11,11 +11,14 @@ import PatternToggle from './PatternToggle';
 const ToolsWrap = styled.div`
   margin: 10px;
   flex: 1;
+  min-height: 100px;
   z-index: 2;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
+  overflow-y: scroll;
+  padding: 0 10px;
 `;
 
 const ToolsColumn = styled.div`
@@ -51,6 +54,8 @@ class ToolsPalette extends Component {
             onClick={() => {addCommand('POLYGON')}}>
             <span role="img" aria-label="add polygon">⭐ Add Polygon</span>
           </ToolButton>
+          </ToolRow>
+          <ToolRow>
           {
             activeCommand !== null && (
               <Fragment>

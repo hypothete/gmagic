@@ -9,10 +9,10 @@ export default function commandsReducer(state = initialState.commands, action) {
         ...state,
         {
           id: action.payload.id,
-          name: '',
+          name: `cmd-${action.payload.id}`,
           type: action.payload.type,
           points: [],
-          colors: [0,0],
+          colors: [0,7],
           pattern: [
             false, false, false, false,
             false, false, false, false,
