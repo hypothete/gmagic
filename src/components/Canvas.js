@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import {hex, rgb} from '../utils/colors';
+import {hex} from '../utils/colors';
 
 import {addPoint, movePoint, removePoint} from '../actions/commands';
 
@@ -38,6 +38,8 @@ const PixelCanvas = styled.canvas`
   z-index: 1;
   background-color: white;
   flex-shrink: 0;
+  margin: 50px;
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
 `;
 
 class Canvas extends Component {
@@ -293,23 +295,20 @@ class Canvas extends Component {
   }
 
   render() {
-    return (
-      <Fragment>
-        <CanvasFrame>
-          <PixelCanvas scale={this.state.scale} ref="canvas"
-            onMouseDown={this.handleMouseDown}
-            onMouseMove={this.handleMouseMove}
-            onMouseUp={this.handleMouseUp}
-            onClick={this.handleClick}
-            onContextMenu={this.handleContextMenu}
-          ></PixelCanvas>
-        </CanvasFrame>
-        <ZoomCtrls dragging={this.state.dragIndex > -1}>
-        <button onClick={this.zoomIn}><span role="img" aria-label="zoom in">➕</span></button>
-        <button onClick={this.zoomOut}><span role="img" aria-label="zoom out">➖</span></button>
-        </ZoomCtrls>
-      </Fragment>
-    );
+    return [
+      <CanvasFrame onMouseUp={this.handleMouseUp}>
+        <PixelCanvas scale={this.state.scale} ref="canvas"
+          onMouseDown={this.handleMouseDown}
+          onMouseMove={this.handleMouseMove}
+          onClick={this.handleClick}
+          onContextMenu={this.handleContextMenu}
+        ></PixelCanvas>
+      </CanvasFrame>,
+      <ZoomCtrls dragging={this.state.dragIndex > -1}>
+      <button onClick={this.zoomIn}><span role="img" aria-label="zoom in">➕</span></button>
+      <button onClick={this.zoomOut}><span role="img" aria-label="zoom out">➖</span></button>
+      </ZoomCtrls>
+    ];
   }
 }
 
