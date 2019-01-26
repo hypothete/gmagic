@@ -178,7 +178,7 @@ class Canvas extends Component {
   renderCanvas(props) {
     this.ctx.clearRect(0, 0, this.refs.canvas.width, this.refs.canvas.height);
     const {commands, activeCommand} = props;
-    const cmds = [...commands].reverse();
+    const cmds = [...commands];//.reverse();
     let activeCmd;
     cmds.forEach(cmd => {
       switch(cmd.type) {
