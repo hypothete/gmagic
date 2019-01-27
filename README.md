@@ -12,6 +12,8 @@ GMagic is loosely inspired by the Graphics Magician Picture Painter, software us
 
 ## Starting the app
 
+Download the repo, then open a terminal in the folder. Run:
+
 ```bash
   yarn
 
