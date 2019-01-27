@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Canvas from './Canvas';
 import CommandList from './CommandList';
 import ToolsPalette from './ToolsPalette';
+import ExportModal from './ExportModal';
 
 const Row = styled.div`
   width: 100%;
@@ -35,6 +36,7 @@ class App extends Component {
           <CommandList></CommandList>
         </Row>
         <ToolsPalette></ToolsPalette>
+        <ExportModal />
       </Wrap>
     );
   }

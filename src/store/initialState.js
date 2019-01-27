@@ -17,5 +17,6 @@ export default {
     }
   ],
   activeCommand: null,
-  drawingMode: 'EDIT_POINTS'
+  drawingMode: 'EDIT_POINTS',
+  modalOpen: true
 }

@@ -13,3 +13,6 @@ export const ADD_BACKGROUND = 'ADD_BACKGROUND'
 export const SET_ACTIVE_COMMAND = 'SET_ACTIVE_COMMAND';
 
 export const SET_DRAWING_MODE = 'SET_DRAWING_MODE';
+
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
