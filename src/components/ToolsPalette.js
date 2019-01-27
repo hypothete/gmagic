@@ -7,6 +7,7 @@ import {setDrawingMode} from '../actions/drawingMode';
 
 import ColorPalette from './ColorPalette';
 import PatternToggle from './PatternToggle';
+import { openModal } from '../actions/modal';
 
 const ToolsWrap = styled.div`
   margin: 10px;
@@ -29,7 +30,7 @@ const ToolsColumn = styled.div`
 `;
 
 const ToolButton = styled.button`
-  margin: 10px;
+  margin: 0px 5px 5px 5px;
   border-width: 2px;
   border-color: ${props => props.active ? 'blue' : 'none'};
 `;
@@ -41,7 +42,14 @@ const ToolRow = styled.div`
 class ToolsPalette extends Component {
 
   render() {
-    const {addCommand, activeCommand, setDrawingMode, drawingMode, addBackground} = this.props;
+    const {
+      addCommand,
+      activeCommand,
+      setDrawingMode,
+      drawingMode,
+      addBackground,
+      openModal
+      } = this.props;
     return (
       <ToolsWrap>
         <ToolsColumn>
@@ -57,6 +65,10 @@ class ToolsPalette extends Component {
           <ToolButton
             onClick={() => {addBackground()}}>
             <span role="img" aria-label="add background">🖼️ Add Background</span>
+          </ToolButton>
+          <ToolButton
+            onClick={() => {openModal()}} >
+            <span role="img" aria-label="open export modal">💾 Import/Export</span>
           </ToolButton>
           </ToolRow>
           <ToolRow>
@@ -95,4 +107,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, {addCommand, addBackground, setDrawingMode})(ToolsPalette);
+export default connect(mapStateToProps, {addCommand, addBackground, setDrawingMode, openModal})(ToolsPalette);

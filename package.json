@@ -1,7 +1,11 @@
 {
   "name": "gmagic",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "author": {
+    "name": "Duncan Alexander",
+    "email": "duncan@hypothete.com"
+  },
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

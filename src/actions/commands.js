@@ -84,3 +84,10 @@ export function addBackground() {
     }
   }
 }
+
+export function setCommands(commands) {
+  return {
+    type: types.SET_COMMANDS,
+    payload: commands
+  }
+}

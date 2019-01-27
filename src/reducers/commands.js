@@ -169,6 +169,13 @@ export default function commandsReducer(state = initialState.commands, action) {
         return cmd;
       });
     }
+
+    case types.SET_COMMANDS: {
+      // TODO: some command validation
+      return [
+        ...action.payload
+      ];
+    }
     
     default:
       return state;

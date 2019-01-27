@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import {closeModal} from '../actions/modal';
+import {setCommands} from '../actions/commands';
 
 const Overlay = styled.div`
   position: absolute;
@@ -37,10 +38,7 @@ const Body = styled.div`
   padding: 10px;
 `;
 
-const ExitButton = styled.span.attrs({
-  role: 'img',
-  'aria-label': 'exit modal button'
-})`
+const ExitButton = styled.div`
   cursor: pointer;
 `;
 
@@ -48,10 +46,48 @@ class ExportModal extends Component {
   constructor(props) {
     super(props);
     this.exitModal = this.exitModal.bind(this);
+    this.importFile = this.importFile.bind(this);
+  }
+
+  importFile(evt) {
+    const reader = new FileReader();
+    reader.onload = (loadevt) => {
+      const data = JSON.parse(loadevt.target.result);
+      this.props.setCommands(data);
+      this.props.closeModal();
+    };
+    reader.readAsText(evt.target.files[0]);
+  }
+
+  calculatePattern(values) {
+    let count = 0;
+    values.forEach((v, id) => {
+      let w = 0;
+      if (v && id > 0) {
+        w = Math.pow(2,15-id);
+      }
+      else if (v) {
+        w -= 32768;
+      }
+      count += w;
+    });
+    return count;
   }
 
   compressToPico(cmds) {
-    return [];
+    return cmds.map(cmd => {
+      let str = '';
+      if (cmd.type === 'POLYGON') {
+        str += 'poly('
+      }
+      else if (cmd.type === 'LINE') {
+        str += 'line('
+      }
+      let hexCol = (16 * cmd.colors[1] + cmd.colors[0]);
+      const patternData = this.calculatePattern(cmd.pattern);
+      str += `'${cmd.points.join(',')}', 0x${hexCol.toString(16)}, ${patternData})\n`;
+      return str;
+    });
   }
 
   exitModal(evt) {
@@ -73,11 +109,14 @@ class ExportModal extends Component {
         <ModalWindow>
           <Header>
             <p>
-              Export data
+              Import and export data
             </p>
-            <ExitButton onClick={this.exitModal}>❌</ExitButton>
+            <ExitButton onClick={this.exitModal}><span role="img" aria-label="exit modal button">❌</span></ExitButton>
           </Header>
           <Body>
+            <p>
+              Import JSON: <input type="file" onChange={this.importFile} /> 
+            </p>
             <p>
               <a download="gmagic_drawing.json" href={jsonUrl}>Download JSON</a>
             </p>
@@ -98,4 +137,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, {closeModal})(ExportModal);
+export default connect(mapStateToProps, {closeModal, setCommands})(ExportModal);
