@@ -135,6 +135,10 @@ class Canvas extends Component {
     for (let h=0; h<pts.length; h+=2) {
       polyX.push(pts[h]);
       polyY.push(pts[h+1]);
+      if (h < pts.length-3) {
+        // fudge for scanline not working when y1 = y2
+        this.bresenham(pts[h], pts[h+1], pts[h+2], pts[h+3], colors, pattern);
+      }
     }
     //build node list
     for (let y=0; y<this.refs.canvas.height; y++) {

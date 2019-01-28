@@ -53,7 +53,3 @@ While a command is active, two new buttons will appear in this menu: **Add Point
 The **Help Button** brings you to this readme!
 
 The **Color Palettes** let you control the primary and secondary colors for the active command. They work in tandem with the grid of checkboxes, called the **Pattern Toggle**. With a polygon command selected, try clicking a color in each color palette, then checking and unchecking the boxes in the Pattern Toggle. You should see that the pattern made by the checkboxes determines how the colors you selected fill the polygon. There are lots of interesting combinations possible using this method - try experimenting with different patterns!
-
-## Known bugs
-
-There is a bug in the polygon fill code that prevents fills occurring at Y=0. This is my top priority for the near future.
