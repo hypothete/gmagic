@@ -33,6 +33,7 @@ const ToolButton = styled.button`
   margin: 0px 5px 5px 5px;
   border-width: 2px;
   border-color: ${props => props.active ? 'blue' : 'none'};
+  cursor: pointer;
 `;
 
 const ToolRow = styled.div`
@@ -70,6 +71,11 @@ class ToolsPalette extends Component {
             onClick={() => {openModal()}} >
             <span role="img" aria-label="open export modal">💾 Import/Export</span>
           </ToolButton>
+          <a href="//github.com/hypothete/gmagic" target="_blank" rel="noreferrer noopener">
+            <ToolButton>
+              <span role="img" aria-label="go to help readme">❓ Help</span>
+            </ToolButton>
+          </a>
           </ToolRow>
           <ToolRow>
           {

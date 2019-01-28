@@ -50,6 +50,8 @@ While a command is active, two new buttons will appear in this menu: **Add Point
 
 **Import/Export** calls up a modal that lets you import a drawing previously exported as JSON, and also save your drawing as either JSON or proprietary PICO-8 markup. PICO-8 doesn't have polygon and polyline commmands, so I've written some myself. This section will be updated when the code is ready to share.
 
+The **Help Button** brings you to this readme!
+
 The **Color Palettes** let you control the primary and secondary colors for the active command. They work in tandem with the grid of checkboxes, called the **Pattern Toggle**. With a polygon command selected, try clicking a color in each color palette, then checking and unchecking the boxes in the Pattern Toggle. You should see that the pattern made by the checkboxes determines how the colors you selected fill the polygon. There are lots of interesting combinations possible using this method - try experimenting with different patterns!
 
 ## Known bugs
