@@ -10,6 +10,7 @@ export const NAME_COMMAND = 'NAME_COMMAND';
 export const SET_PATTERN = 'SET_PATTERN';
 export const ADD_BACKGROUND = 'ADD_BACKGROUND';
 export const SET_COMMANDS = 'SET_COMMANDS';
+export const MOVE_COMMAND = 'MOVE_COMMAND';
 
 export const SET_ACTIVE_COMMAND = 'SET_ACTIVE_COMMAND';
 

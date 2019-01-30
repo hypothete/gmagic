@@ -89,6 +89,10 @@ class ToolsPalette extends Component {
                   onClick={() => {setDrawingMode('EDIT_POINTS')}} active={drawingMode === 'EDIT_POINTS'}>
                   <span role="img" aria-label="edit points">📍 Edit Points</span>
                 </ToolButton>
+                <ToolButton
+                  onClick={() => {setDrawingMode('MOVE_POINTS')}} active={drawingMode === 'MOVE_POINTS'}>
+                  <span role="img" aria-label="move points">🕹️ Move Points</span>
+                </ToolButton>
               </Fragment>
             )
           }

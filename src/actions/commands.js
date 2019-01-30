@@ -91,3 +91,10 @@ export function setCommands(commands) {
     payload: commands
   }
 }
+
+export function moveCommand(id, x, y) {
+  return {
+    type: types.MOVE_COMMAND,
+    payload: { id, x, y }
+  }
+}

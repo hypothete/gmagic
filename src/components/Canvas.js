@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import {hex} from '../utils/colors';
 
-import {addPoint, movePoint, removePoint} from '../actions/commands';
+import {addPoint, movePoint, removePoint, moveCommand} from '../actions/commands';
 
 const CanvasFrame = styled.div`
   position: relative;
@@ -60,7 +60,10 @@ class Canvas extends Component {
 
     this.state = {
       dragIndex: -1,
-      scale: 512
+      movingPoints: false,
+      scale: 512,
+      lastX: 0,
+      lastY: 0
     }
   }
 
@@ -259,8 +262,8 @@ class Canvas extends Component {
   handleClick(evt) {
     evt.stopPropagation();
     evt.preventDefault();
-    if (!this.props.activeCommand) return;
-    if (this.props.drawingMode === 'EDIT_POINTS') return;
+    if (this.props.activeCommand === null) return;
+    if (this.props.drawingMode !== 'ADD_POINTS') return;
     // add point
     const { x, y } = this.convert(evt);
     this.props.addPoint(this.props.activeCommand, x, y);
@@ -269,30 +272,56 @@ class Canvas extends Component {
   handleMouseDown(evt) {
     evt.stopPropagation();
     evt.preventDefault();
-    if (!this.props.activeCommand || this.props.drawingMode !== 'EDIT_POINTS') return;
-    const nearest = this.getNearestPoint(evt);
-    if (nearest >= 0) {
-      // found a point
+    if (this.props.activeCommand === null) return;
+    if (this.props.drawingMode === 'MOVE_POINTS') {
+      const {x, y} = this.convert(evt);
       this.setState({
-        dragIndex: nearest
+        movingPoints: true,
+        lastX: x,
+        lastY: y
       });
+    }
+    else if (this.props.drawingMode === 'EDIT_POINTS') {
+      const nearest = this.getNearestPoint(evt);
+      if (nearest >= 0) {
+        // found a point
+        this.setState({
+          dragIndex: nearest
+        });
+      }
     }
   }
 
   handleMouseMove(evt) {
     evt.stopPropagation();
     evt.preventDefault();
-    if (this.state.dragIndex < 0) return;
-    // move selected point
-    const {x, y} = this.convert(evt);
-    this.props.movePoint(this.props.activeCommand, this.state.dragIndex, x, y);
+    if (this.props.activeCommand === null) return;
+    if (this.props.drawingMode === 'EDIT_POINTS' && this.state.dragIndex >= 0) {
+      // move selected point
+      const {x, y} = this.convert(evt);
+      this.props.movePoint(this.props.activeCommand, this.state.dragIndex, x, y);
+    }
+    else if (this.props.drawingMode === 'MOVE_POINTS' && this.state.movingPoints) {
+      const {x, y} = this.convert(evt);
+      const dx = x - this.state.lastX;
+      const dy = y - this.state.lastY;
+      this.props.moveCommand(this.props.activeCommand, dx, dy);
+      this.setState({
+        lastX: x,
+        lastY: y
+      });
+    }
   }
 
   handleMouseUp(evt) {
     evt.stopPropagation();
     evt.preventDefault();
+    const {x, y} = this.convert(evt);
     this.setState({
-      dragIndex: -1
+      dragIndex: -1,
+      movingPoints: false,
+      lastX: x,
+      lastY: y
     });
   }
 
@@ -327,4 +356,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, {addPoint, movePoint, removePoint})(Canvas);
+export default connect(mapStateToProps, {addPoint, movePoint, removePoint, moveCommand})(Canvas);

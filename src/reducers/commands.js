@@ -176,6 +176,28 @@ export default function commandsReducer(state = initialState.commands, action) {
         ...action.payload
       ];
     }
+
+    case types.MOVE_COMMAND: {
+      const {id, x, y} = action.payload;
+      return state.map(cmd => {
+        if (cmd.id === id) {
+          return {
+            ...cmd,
+            points: cmd.points.map((pt, index) => {
+              if (index % 2 == 0) {
+                // x
+                return pt + x;
+              }
+              else {
+                // y
+                return pt + y;
+              }
+            })
+          }
+        }
+        return cmd;
+      });
+    }
     
     default:
       return state;
