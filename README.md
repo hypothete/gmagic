@@ -46,7 +46,7 @@ The **Add Line** button lets you start drawing a line by clicking on the Canvas.
 
 **Add Background** is just a special-case version of Add Polygon - it's a preset that draws a polygon box to cover the Canvas, and the new command places itself in back of all of your other commands.
 
-While a command is active, two new buttons will appear in this menu: **Add Points** and **Edit Points**. Add Points is crude, in that when it is selected (it will have a blue border) and you click on the Canvas, a new point will be added after the last point you added to the command. You might need to switch to Edit Points and move things around to your liking. Edit Points lets you drag existing points to new locations on the Canvas.
+While a command is active, three new buttons will appear in this menu: **Add Points**, **Edit Points**, and **Move Points**. Add Points is simple, in that when it is selected (it will have a blue border) and you click on the Canvas, a new point will be added after the last point you added to the command. You might need to switch to Edit Points and move things around to your liking. Edit Points lets you drag existing points to new locations on the Canvas, and Move Points lets you drag whole commands around.
 
 **Import/Export** calls up a modal that lets you import a drawing previously exported as JSON, and also save your drawing as either JSON or proprietary PICO-8 markup. PICO-8 doesn't have polygon and polyline commmands, so I've written some myself. This section will be updated when the code is ready to share.
 
