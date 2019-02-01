@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "56addcf04c3f0a2e0753",
+    "revision": "d41061606fdf92d553d6",
     "url": "/gmagic/static/css/main.d88cec03.chunk.css"
   },
   {
-    "revision": "56addcf04c3f0a2e0753",
-    "url": "/gmagic/static/js/main.56addcf0.chunk.js"
+    "revision": "d41061606fdf92d553d6",
+    "url": "/gmagic/static/js/main.d4106160.chunk.js"
   },
   {
     "revision": "0342d4d2e4db1cb341b6",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/gmagic/static/js/runtime~main.3f52ad7e.js"
   },
   {
-    "revision": "97d6bde24f11a729ba0e2748c90c55ae",
+    "revision": "3231ec860988e6f11c28a3486a17f753",
     "url": "/gmagic/index.html"
   }
 ];
