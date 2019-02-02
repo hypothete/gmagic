@@ -3,7 +3,7 @@
 
 function poly(r,c,p)
 	local t=ptstr(r)
-	--from alienryderflex.com/polygon_fill
+	--based off alienryderflex.com/polygon_fill
 	--t=table x1,y1,x2,y2...
 	--c=colors (hex)
 	--p=pattern
