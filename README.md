@@ -1,8 +1,6 @@
 # GMagic 🧙
 
-![An image of the UI](screenshots/ui.png)
-
-![Rendered output from the PICO-8](screenshots/output.png)
+![Rendered output from the PICO-8](screenshots/computergraphics.png)
 
 ## Purpose
 
@@ -12,7 +10,9 @@ GMagic is loosely inspired by the Graphics Magician Picture Painter, software us
 
 ## Starting the app
 
-Download the repo, then open a terminal in the folder. Run:
+You can use GMagic online at [hypothete.github.io/gmagic](https://hypothete.github.io/gmagic).
+
+To run locally, download the repo, then open a terminal in the folder. Run:
 
 ```bash
   yarn
@@ -53,3 +53,7 @@ While a command is active, three new buttons will appear in this menu: **Add Poi
 The **Help Button** brings you to this readme!
 
 The **Color Palettes** let you control the primary and secondary colors for the active command. They work in tandem with the grid of checkboxes, called the **Pattern Toggle**. With a polygon command selected, try clicking a color in each color palette, then checking and unchecking the boxes in the Pattern Toggle. You should see that the pattern made by the checkboxes determines how the colors you selected fill the polygon. There are lots of interesting combinations possible using this method - try experimenting with different patterns!
+
+## Using your drawings in PICO-8
+
+You can find the draw functions necessary in [PICO-8.lua](PICO-8.lua). There are commented out yield() statements, in case you want to use the functions in a coroutine for a "draw-in" effect.
