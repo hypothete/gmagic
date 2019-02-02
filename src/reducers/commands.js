@@ -184,7 +184,7 @@ export default function commandsReducer(state = initialState.commands, action) {
           return {
             ...cmd,
             points: cmd.points.map((pt, index) => {
-              if (index % 2 == 0) {
+              if (index % 2 === 0) {
                 // x
                 return pt + x;
               }

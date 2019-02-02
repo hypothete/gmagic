@@ -217,11 +217,11 @@ class Canvas extends Component {
     if(activeCmd) {
       // draw points
       this.ctx.globalCompositeOperation = 'xor';
-      this.ctx.strokeStyle = hex[activeCmd.colorId];
+      this.ctx.strokeStyle = hex[activeCmd.colors[0]];
       for (let i=0; i< activeCmd.points.length; i+=2) {
         const x = activeCmd.points[i] - 0.5;
         const y = activeCmd.points[i+1] - 0.5;
-        this.ctx.strokeRect(x-1, y-1, 2, 2);
+        this.ctx.strokeRect(x, y, 2, 2);
       }
       this.ctx.globalCompositeOperation = 'source-over';
     }

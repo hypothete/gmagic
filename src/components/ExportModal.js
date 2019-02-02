@@ -75,19 +75,20 @@ class ExportModal extends Component {
   }
 
   compressToPico(cmds) {
-    return cmds.map(cmd => {
-      let str = '';
+    let str = 'function()\n';
+    cmds.forEach(cmd => {
       if (cmd.type === 'POLYGON') {
-        str += 'poly('
+        str += ' poly('
       }
       else if (cmd.type === 'LINE') {
-        str += 'line('
+        str += ' pline('
       }
       let hexCol = (16 * cmd.colors[1] + cmd.colors[0]);
       const patternData = this.calculatePattern(cmd.pattern);
       str += `'${cmd.points.join(',')}', 0x${hexCol.toString(16)}, ${patternData})\n`;
-      return str;
     });
+    str += 'end\n'
+    return str;
   }
 
   exitModal(evt) {
@@ -100,7 +101,7 @@ class ExportModal extends Component {
     if (!modalOpen) return null;
 
     const jsonBlob = new Blob([JSON.stringify(commands, null, 2)], { type: 'application/json' });
-    const picoBlob = new Blob(this.compressToPico(commands), { type: 'text/plain' });
+    const picoBlob = new Blob([this.compressToPico(commands)], { type: 'text/plain' });
     const jsonUrl = window.URL.createObjectURL(jsonBlob);
     const picoUrl = window.URL.createObjectURL(picoBlob);
 
