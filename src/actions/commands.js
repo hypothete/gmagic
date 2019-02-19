@@ -98,3 +98,21 @@ export function moveCommand(id, x, y) {
     payload: { id, x, y }
   }
 }
+
+export function copyCommand(command) {
+  return {
+    type: types.COPY_COMMAND,
+    payload: {
+      ...command,
+      name: command.name + '-copy',
+      id: ++commandCount
+    }
+  }
+}
+
+export function changeCommandType(id) {
+  return {
+    type: types.CHANGE_COMMAND_TYPE,
+    payload: id
+  }
+}

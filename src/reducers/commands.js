@@ -198,6 +198,26 @@ export default function commandsReducer(state = initialState.commands, action) {
         return cmd;
       });
     }
+
+    case types.COPY_COMMAND: {
+      const newCmd = action.payload;
+      return [
+        ...state,
+        newCmd
+      ];
+    }
+
+    case types.CHANGE_COMMAND_TYPE: {
+      return state.map(cmd => {
+        if (cmd.id === action.payload) {
+          return {
+            ...cmd,
+            type: cmd.type === 'POLYGON' ? 'LINE' : 'POLYGON'
+          };
+        }
+        return cmd;
+      })
+    }
     
     default:
       return state;

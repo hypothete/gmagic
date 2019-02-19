@@ -34,7 +34,7 @@ The Canvas is where you can view and edit your drawing. There are zoom in/out bu
 
 ### The Commands List
 
-The Commands List describes the stacking order of all of the polygons and lines in your drawing. Each command has a text box for the name of the command, a glyph indicating the type of command (⭐for polygons, ✒️ for lines), two color swatches to show what colors are applied to the command, and some buttons for layer adjustment. By clicking the up or down arrows, you can adjust how your commands are stacked in the drawing, with commands at the top of the list farthest to the "back" of the drawing. Finally, the 🗑️ button deletes the command.
+The Commands List describes the stacking order of all of the polygons and lines in your drawing. Each command has a text box for the name of the command, a glyph indicating the type of command (⭐for polygons, ✒️ for lines), two color swatches to show what colors are applied to the command, and some buttons for layer adjustment. By clicking the up or down arrows, you can adjust how your commands are stacked in the drawing, with commands at the top of the list farthest to the "back" of the drawing. There is also a row of command modifiers. The ✂️ button makes a copy of the selected command. The ♻️ button turns a polygon into a line (or vice versa). Finally, the 🗑️ button deletes the command.
 
 Clicking on a command in the Commands List turns it gray, and clicking it again turns it back white. When a command in the Commands List is gray, it is considered the *active command*. That means that you can use the tools in the Tools Palette to manipulate its properties.
 

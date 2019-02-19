@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import {setActiveCommand} from '../actions/activeCommand';
-import {moveCommandUp, moveCommandDown, removeCommand, nameCommand} from '../actions/commands';
+import {moveCommandUp, moveCommandDown, removeCommand, nameCommand, copyCommand, changeCommandType} from '../actions/commands';
 
 import {hex} from '../utils/colors';
 
@@ -33,12 +33,20 @@ const EntryCtrls = styled.div`
 
 const EntryText = styled.div`
   display: flex;
-  height: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-right: 10px;
   flex: 1;
+  height: 50%;
+`;
+
+const CommandEdits = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+  margin: 5px;
 `;
 
 const EntrySwatch = styled.div`
@@ -52,6 +60,7 @@ const EntrySwatch = styled.div`
 const EntrySwatches = styled.div`
   width: 3em;
   height: 3em;
+  margin: 5px;
 `;
 
 class CommandListItem extends Component {
@@ -62,6 +71,8 @@ class CommandListItem extends Component {
     this.moveDown = this.moveDown.bind(this);
     this.remove = this.remove.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.copy = this.copy.bind(this);
+    this.change = this.change.bind(this);
   }
 
   selectItem() {
@@ -83,6 +94,16 @@ class CommandListItem extends Component {
     this.props.moveCommandDown(this.props.item);
   }
 
+  copy(evt) {
+    evt.stopPropagation();
+    this.props.copyCommand(this.props.item);
+  }
+
+  change(evt) {
+    evt.stopPropagation();
+    this.props.changeCommandType(this.props.item.id);
+  }
+
   remove(evt) {
     evt.stopPropagation();
     this.props.removeCommand(this.props.item);
@@ -102,22 +123,33 @@ class CommandListItem extends Component {
         onClick={this.selectItem}
         active={activeCommand === item.id}
       >
-        <EntryText>
-          <span role="img" aria-label={item.type}>{typeToEmoji[item.type]}</span>
-          <input type="text" value={item.name} onChange={this.handleNameChange} />
-        </EntryText>
+        <div>
+          <EntryText>
+            <span role="img" aria-label={item.type}>{typeToEmoji[item.type]}</span>
+            <input type="text" value={item.name} onChange={this.handleNameChange} />
+          </EntryText>
+          <CommandEdits>
+            <button onClick={this.copy} title="copy command">
+              <span role="img" aria-label="copy command">✂️</span>
+            </button>
+            <button onClick={this.change} title="change command type">
+              <span role="img" aria-label="change command type">♻️</span>
+            </button>
+            <button onClick={this.remove} title="remove command">
+              <span role="img" aria-label="remove command">🗑️</span>
+            </button>
+          </CommandEdits>
+        </div>
+        
         <EntrySwatches>
           <EntrySwatch color={hex[item.colors[0]]}></EntrySwatch>
           <EntrySwatch color={hex[item.colors[1]]}></EntrySwatch>
         </EntrySwatches>
         <EntryCtrls>
-          <button onClick={this.moveUp}>
+          <button onClick={this.moveUp} title="move command up">
             <span role="img" aria-label="move command up">🔼</span>
           </button>
-          <button onClick={this.remove}>
-            <span role="img" aria-label="remove command">🗑️</span>
-          </button>
-          <button onClick={this.moveDown}>
+          <button onClick={this.moveDown} title="move command down">
             <span role="img" aria-label="move command down">🔽</span>
           </button>
         </EntryCtrls>
@@ -137,7 +169,9 @@ const mapDispatchToProps = {
   moveCommandUp,
   moveCommandDown,
   removeCommand,
-  nameCommand
+  nameCommand,
+  copyCommand,
+  changeCommandType
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommandListItem);

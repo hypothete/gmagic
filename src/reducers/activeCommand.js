@@ -15,6 +15,10 @@ export default function activeCommandReducer(state = initialState.activeCommand,
       return (action.payload.id === state) ? null : state;
     }
 
+    case types.COPY_COMMAND: {
+      return action.payload.id;
+    }
+
     default:
       return state;
   }
