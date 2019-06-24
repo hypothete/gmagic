@@ -1,4 +1,22 @@
 
+--parse table from string
+
+function ptstr(s)
+	local data={}
+	local wip=''
+	for i=1,#s do
+		r=sub(s,i,i)
+		if(r==',') then
+			add(data,wip+0)
+			wip=''
+		else
+			wip=wip..r
+		end
+	end
+	add(data,wip+0)
+	return data
+end
+
 --polygon
 
 function poly(r,c,p)
