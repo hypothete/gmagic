@@ -1,5 +1,7 @@
 # GMagic 🧙
 
+## Try it at [hypothete.github.io/gmagic](https://hypothete.github.io/gmagic)
+
 ![Rendered output from the PICO-8](screenshots/computergraphics.png)
 
 ## Purpose
@@ -9,8 +11,6 @@ GMagic is a simple polygon and line editor, developed to prepare 128x128, 16 col
 GMagic is loosely inspired by the [Graphics Magician Picture Painter](http://graphicsmagician.com/polarware/), software used in the late 70s and early 80s to design graphics for adventure games and other programs of the time.
 
 ## Starting the app
-
-You can use GMagic online at [hypothete.github.io/gmagic](https://hypothete.github.io/gmagic).
 
 To run locally, download the repo, then open a terminal in the folder. Run:
 
